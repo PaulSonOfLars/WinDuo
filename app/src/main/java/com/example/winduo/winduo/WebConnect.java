@@ -130,17 +130,17 @@ public class WebConnect extends AsyncTask<String, Void, MatrixCursor> {
             inStream.close();
             connection.disconnect();
 
-            jsonArray = new JSONArray(response.substring(response.indexOf("["), response.lastIndexOf("]") + 1));
+            response.substring(response.indexOf("["), response.indexOf("]") - 1);
+            String[] val= response.split(",");
 
 
             ArrayList<JSONObject> list = new ArrayList<>();
-            if (jsonArray != null) {
-                int len = jsonArray.length();
-                for (int i=0;i<len;i++){
-                    list.add(jsonArray.getJSONObject(i));
+//            if (jsonArray != null)
+                for (int i=0;i<val.length;i++){
+                    list.add(new JSONObject("\"{room: " + val[i] + "\"}"));
                 }
-                Log.d("TEST:", jsonArray.toString());
-            }
+//                Log.d("TEST:", jsonArray.toString());
+//            }
             return list;
         } catch (Exception e) {
             Log.e("ERROR", e.getMessage(), e);
